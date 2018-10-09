@@ -49,8 +49,42 @@ class ExpressionParserTest {
                 RpnToken(RpnTokenType.RIGHT_BRACKET)
         )
 
+        val thirdExpression = "((2+7)/3+(14-3)*4)/2"
+        val thirdSplitExpression = listOf(
+                RpnToken(RpnTokenType.LEFT_BRACKET),
+                RpnToken(RpnTokenType.LEFT_BRACKET),
+                RpnToken(RpnTokenType.NUMBER, 2f),
+                RpnToken(RpnTokenType.ADD),
+                RpnToken(RpnTokenType.NUMBER, 7f),
+                RpnToken(RpnTokenType.RIGHT_BRACKET),
+                RpnToken(RpnTokenType.DIVIDE),
+                RpnToken(RpnTokenType.NUMBER, 3f),
+                RpnToken(RpnTokenType.ADD),
+                RpnToken(RpnTokenType.LEFT_BRACKET),
+                RpnToken(RpnTokenType.NUMBER, 14f),
+                RpnToken(RpnTokenType.SUBTRACT),
+                RpnToken(RpnTokenType.NUMBER, 3f),
+                RpnToken(RpnTokenType.RIGHT_BRACKET),
+                RpnToken(RpnTokenType.MULTIPLY),
+                RpnToken(RpnTokenType.NUMBER, 4f),
+                RpnToken(RpnTokenType.RIGHT_BRACKET),
+                RpnToken(RpnTokenType.DIVIDE),
+                RpnToken(RpnTokenType.NUMBER, 2f)
+        )
+
         Assert.assertEquals(firstSplitExpression, ExpressionParser.splitExpression(firstExpression))
         Assert.assertEquals(secondSplitExpression, ExpressionParser.splitExpression(secondExpression))
+        Assert.assertEquals(thirdSplitExpression, ExpressionParser.splitExpression(thirdExpression))
+
+        try {
+            ExpressionParser.splitExpression("12,34+5,25")
+            Assert.fail()
+        } catch (e: Exception) {}
+
+        try {
+            ExpressionParser.splitExpression("12.5.34 + 53.11.23")
+            Assert.fail()
+        } catch (e: Exception) {}
     }
 
     @Test
@@ -84,8 +118,31 @@ class ExpressionParserTest {
                 RpnToken(RpnTokenType.DIVIDE)
         )
 
+        val thirdExpression = "((2+7)/3+(14-3)*4)/2"
+        val thirdRpnNotation = listOf(
+                RpnToken(RpnTokenType.NUMBER, 2f),
+                RpnToken(RpnTokenType.NUMBER, 7f),
+                RpnToken(RpnTokenType.ADD),
+                RpnToken(RpnTokenType.NUMBER, 3f),
+                RpnToken(RpnTokenType.DIVIDE),
+                RpnToken(RpnTokenType.NUMBER, 14f),
+                RpnToken(RpnTokenType.NUMBER, 3f),
+                RpnToken(RpnTokenType.SUBTRACT),
+                RpnToken(RpnTokenType.NUMBER, 4f),
+                RpnToken(RpnTokenType.MULTIPLY),
+                RpnToken(RpnTokenType.ADD),
+                RpnToken(RpnTokenType.NUMBER, 2f),
+                RpnToken(RpnTokenType.DIVIDE)
+        )
+
         Assert.assertEquals(firstRpnNotation, ExpressionParser.convertInfixToRpn(ExpressionParser.splitExpression(firstExpression)))
         Assert.assertEquals(secondRpnNotation, ExpressionParser.convertInfixToRpn(ExpressionParser.splitExpression(secondExpression)))
+        Assert.assertEquals(thirdRpnNotation, ExpressionParser.convertInfixToRpn(ExpressionParser.splitExpression(thirdExpression)))
+
+        try {
+            ExpressionParser.convertInfixToRpn(ExpressionParser.splitExpression("325.23 + 45) / (25.36+11) * 5"))
+            Assert.fail()
+        } catch (e: Exception) { }
 
     }
 }

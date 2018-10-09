@@ -31,10 +31,7 @@ object ExpressionParser {
             if (char.isDigit() || char == DECIMAL_SEPARATOR)
                 numberBuffer.append(char)
             else {
-                if (numberBuffer.isNotEmpty()) {
-                    tokens.add(RpnToken(RpnTokenType.NUMBER, numberBuffer.toString().toFloat()))
-                    numberBuffer.delete(0, numberBuffer.length)
-                }
+                resolveNumbersBuffer(numberBuffer, tokens)
                 when {
                     char.isWhitespace() -> { }
                     char == LEFT_BRACKET -> tokens.add(RpnToken(RpnTokenType.LEFT_BRACKET))
@@ -45,7 +42,15 @@ object ExpressionParser {
             }
         }
 
+        resolveNumbersBuffer(numberBuffer, tokens)
         return tokens
+    }
+
+    private fun resolveNumbersBuffer(numberBuffer: StringBuffer, tokens: MutableList<RpnToken>) {
+        if (numberBuffer.isNotEmpty()) {
+            tokens.add(RpnToken(RpnTokenType.NUMBER, numberBuffer.toString().toFloat()))
+            numberBuffer.delete(0, numberBuffer.length)
+        }
     }
 
     fun convertInfixToRpn(splitExpression: List<RpnToken>): List<RpnToken> {
