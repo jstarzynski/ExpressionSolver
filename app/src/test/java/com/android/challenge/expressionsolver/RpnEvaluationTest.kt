@@ -1,5 +1,7 @@
 package com.android.challenge.expressionsolver
 
+import com.android.challenge.expressionsolver.utils.ExpressionParser
+import com.android.challenge.expressionsolver.utils.RpnEvaluator
 import org.junit.Assert
 import org.junit.Test
 

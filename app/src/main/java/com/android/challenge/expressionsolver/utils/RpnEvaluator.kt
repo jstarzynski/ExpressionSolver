@@ -1,5 +1,7 @@
-package com.android.challenge.expressionsolver
+package com.android.challenge.expressionsolver.utils
 
+import com.android.challenge.expressionsolver.model.RpnToken
+import com.android.challenge.expressionsolver.model.RpnTokenType
 import java.util.*
 
 object RpnEvaluator {

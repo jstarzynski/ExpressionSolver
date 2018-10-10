@@ -1,4 +1,4 @@
-package com.android.challenge.expressionsolver
+package com.android.challenge.expressionsolver.model
 
 data class RpnToken(val type: RpnTokenType, val value: Float = 0f) {
 

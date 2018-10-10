@@ -1,5 +1,7 @@
-package com.android.challenge.expressionsolver
+package com.android.challenge.expressionsolver.utils
 
+import com.android.challenge.expressionsolver.model.RpnToken
+import com.android.challenge.expressionsolver.model.RpnTokenType
 import java.util.*
 
 object ExpressionParser {
@@ -7,6 +9,7 @@ object ExpressionParser {
     private const val LEFT_BRACKET = '('
     private const val RIGHT_BRACKET = ')'
     private const val DECIMAL_SEPARATOR = '.'
+    private val NUMBER_SIGNS = arrayOf('+', '-')
     private val OPERATORS = arrayOf('+', '-', '*', '/')
 
     private val OPERATORS_PRIORITY = mapOf(
@@ -28,7 +31,11 @@ object ExpressionParser {
 
         expression.forEach { char ->
 
-            if (char.isDigit() || char == DECIMAL_SEPARATOR)
+            if (tokens.lastOrNull()?.type != RpnTokenType.NUMBER
+                    && numberBuffer.isEmpty()
+                    && char in NUMBER_SIGNS)
+                numberBuffer.append(char)
+            else if (char.isDigit() || char == DECIMAL_SEPARATOR)
                 numberBuffer.append(char)
             else {
                 resolveNumbersBuffer(numberBuffer, tokens)

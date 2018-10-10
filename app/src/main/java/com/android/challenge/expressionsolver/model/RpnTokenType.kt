@@ -1,4 +1,4 @@
-package com.android.challenge.expressionsolver
+package com.android.challenge.expressionsolver.model
 
 enum class RpnTokenType {
     ADD,
