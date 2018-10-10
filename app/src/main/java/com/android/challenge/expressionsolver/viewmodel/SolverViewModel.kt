@@ -9,9 +9,19 @@ import java.util.concurrent.Executors
 
 class SolverViewModel : ViewModel() {
 
+    /**
+     * Stream delivering evaluated expressions values
+     */
     val evaluatedValue : MutableLiveData<Float> = MutableLiveData()
+
+    /**
+     * Stream delivering error states issued during evaluation
+     */
     val errorState : MutableLiveData<Boolean> = MutableLiveData()
 
+    /**
+     * Thread executor
+     */
     private val executor: ExecutorService = Executors.newSingleThreadExecutor()
 
     init {
@@ -19,6 +29,10 @@ class SolverViewModel : ViewModel() {
         errorState.postValue(false)
     }
 
+    /**
+     * Evaluates new expression on separate thread delivering result and/or error state
+     * to appropriate streams
+     */
     fun evaluateExpression(expression: String) {
         executor.execute {
             try {

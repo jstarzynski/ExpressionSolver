@@ -19,14 +19,24 @@ class SolverActivity : AppCompatActivity() {
 
         val solverViewModel = ViewModelProviders.of(this).get(SolverViewModel::class.java)
 
+        /*
+        Observing changes to the value calculated in the View Model on the separate thread
+         */
         solverViewModel.evaluatedValue.observe(this, Observer {
             solution.text = it.toString()
         })
 
+        /*
+        Observing changes to the error stream that is fed based on the current evaluation process
+         */
         solverViewModel.errorState.observe(this, Observer {
             error_message.visibility = if (it == true) View.VISIBLE else View.GONE
         })
 
+        /*
+        Observing changes to the keyboard input on the text field to pass an updated expression
+        for parser and evaluator
+         */
         expressionInput.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(text: Editable?) {
                 solverViewModel.evaluateExpression(text.toString())

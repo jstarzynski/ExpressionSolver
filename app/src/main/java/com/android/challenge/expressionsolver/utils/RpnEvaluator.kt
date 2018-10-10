@@ -4,8 +4,15 @@ import com.android.challenge.expressionsolver.model.RpnToken
 import com.android.challenge.expressionsolver.model.RpnTokenType
 import java.util.*
 
+/**
+ * Utility class for evaluating RPN expression (in internal format)
+ */
 object RpnEvaluator {
 
+    /**
+     * Computes value of the RPN expression
+     * It follows standard algorithm for evaluating RPN expressions.
+     */
     fun evaluate(rpnExpression: List<RpnToken>): Float {
         val stack = Stack<Float>()
 
