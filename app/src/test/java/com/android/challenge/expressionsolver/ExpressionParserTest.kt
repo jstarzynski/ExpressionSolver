@@ -75,9 +75,23 @@ class ExpressionParserTest {
                 RpnToken(RpnTokenType.NUMBER, 2f)
         )
 
+        val fourthExpression = "1+(2+3)+4"
+        val fourthSplitExpression = listOf(
+                RpnToken(RpnTokenType.NUMBER, 1f),
+                RpnToken(RpnTokenType.ADD),
+                RpnToken(RpnTokenType.LEFT_BRACKET),
+                RpnToken(RpnTokenType.NUMBER, 2f),
+                RpnToken(RpnTokenType.ADD),
+                RpnToken(RpnTokenType.NUMBER, 3f),
+                RpnToken(RpnTokenType.RIGHT_BRACKET),
+                RpnToken(RpnTokenType.ADD),
+                RpnToken(RpnTokenType.NUMBER, 4f)
+        )
+
         Assert.assertEquals(firstSplitExpression, ExpressionParser.splitExpression(firstExpression))
         Assert.assertEquals(secondSplitExpression, ExpressionParser.splitExpression(secondExpression))
         Assert.assertEquals(thirdSplitExpression, ExpressionParser.splitExpression(thirdExpression))
+        Assert.assertEquals(fourthSplitExpression, ExpressionParser.splitExpression(fourthExpression))
 
         try {
             ExpressionParser.splitExpression("12,34+5,25")

@@ -57,7 +57,7 @@ object ExpressionParser {
             and char may represent sign of the number we use it when parsing the number that may
             appear after that.
              */
-            if (tokens.lastOrNull()?.type != RpnTokenType.NUMBER
+            if (tokens.lastOrNull()?.type !in arrayOf(RpnTokenType.NUMBER, RpnTokenType.RIGHT_BRACKET)
                     && numberBuffer.isEmpty()
                     && char in NUMBER_SIGNS)
                 numberBuffer.append(char)
